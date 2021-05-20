@@ -1,0 +1,97 @@
+/*全体　共通
+最初から設定してあるので特に変更
+しなくても大丈夫です♪
+-----------------*/
+body{
+	font-family: Roboto, "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
+	line-height: 1.75;
+	font-size: 17px;
+	width: 960px;
+	margin-left:auto;
+  margin-right:auto;
+	background-image: url(../img/slide_about_001.jpg);
+	background-size: cover;
+	background-attachment:fixed;
+	background-color:rgba(255,255,255,0.4);
+	background-blend-mode:lighten;
+	font-family: 'YuMincho';
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.background {
+	background: rgba(191, 238, 241, 0.541);
+	margin-top: 90px;
+	padding: 80px 100px;
+	text-align: center;
+	border-radius: 90px;
+}
+
+
+/* パディングをサイズ内側にする処理　*/
+* {
+	padding:0;
+	margin:0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/*ーーーーーーーーーーー*/
+/*この下から記述*/
+/*ーーーーーーーーーーー*/
+
+.welcome_message h1 {
+	font-size: 84px;
+}
+
+.welcome_message h2 {
+	font-size: 50px;
+}
+
+.welcome_message h3 {
+	font-size: 30px;
+}
+
+.welcome_message h4 {
+	font-size: 26px;
+}
+
+.welcome_subTitle{
+	margin-bottom: 30px;
+	font-style: oblique;
+}
+
+.menu_container {
+	margin-top: 80px;
+	font-size: 26px;
+}
+
+.menu_container a {
+	padding: 4px 26px;
+	border: solid 0.5px;
+	border-radius: 30px;
+	border-color: rgba(20, 32, 200, 0.5);
+	text-decoration: none;
+	color: black;
+	background-color: rgb(189, 231, 141);
+}
+
+.menu_container a:hover {
+	color: red;
+}
+
+.menu_2 {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+}
+
+.menu_2 a {
+	margin: 0 40px;
+	text-decoration: none;
+	color: black;
+}

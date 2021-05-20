@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/user_signUp.css">
+  <title>Sign_Up</title>
+  <!-- この下にAPI KEY -->
+
+</head>
+
+<body>
+
+  <div class="background">
+    <div>
+      <h2>ユーザー登録はこちら</h2>
+    </div>
+
+    <div class="input_container">
+      <div>
+        <p id="error_message_0" class="error_message"></p>
+      </div>
+
+      <div>
+        <h3>ユーザー名 (できればアルファベットにしてね)</h3>
+        <input type="text" id='input_name' placeholder="ユーザー名(６文字以上)">
+        <p id="error_message_1" class="error_message"></p>
+        <p id="error_message_4" class="error_message"></p>
+      </div>
+      <div>
+        <h3>パスワード</h3>
+        <input type="password" id='input_password' placeholder="password">
+      </div>
+      <div>
+        <h3>パスワード (もういっちょ)</h3>
+        <input type="password" id="input_password_confirmation" placeholder="password_confirmation">
+        <p id="error_message_3" class="error_message"></p>
+      </div>
+    </div>
+
+    <div class="btn">
+      <div class="signUp_btn">
+        <a id="sign_up">ポチっとな</a>
+      </div>
+      <div class="else_btn">
+        <div>
+          <a href="index.html">とっぷ</a>
+        </div>
+        <div>
+          <a href="login.html">ログイン</a>
+        </div>
+      </div>
+    </div>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyD_NCLw8CRs6EtqVYsoUa6_cAGFArGhxXI",
+        authDomain: "favorite-point.firebaseapp.com",
+        projectId: "favorite-point",
+        storageBucket: "favorite-point.appspot.com",
+        messagingSenderId: "1047961614364",
+        appId: "1:1047961614364:web:2b98538b617a96648e87d9"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const user_info = firebase.firestore().collection('User_info');
+    </script>
+
+
+    <script>
+      // 登録ボタンを押してfirebaseに保存する処理
+      $('#sign_up').on('click', function () {
+        const signUp_data = {
+          name: $('#input_name').val(),
+          password: $('#input_password').val(),
+          password_confirmation: $('#input_password_confirmation').val(),
+        };
+        if ((signUp_data.password == signUp_data.password_confirmation) && signUp_data.name != "" && signUp_data.password != "") {
+          user_info.add(signUp_data);
+          $('#error_message_0').text('Welcome!! 少々お待ちください');
+          const time_out = function () {
+            window.location.href = 'post.html?' + signUp_data.name;
+          };
+          setTimeout(time_out, 1500);
+        } else {
+          $('#error_message_0').text('入力が正しくありません');
+        }
+        $('#input_name').val('');
+        $('#input_password').val('');
+        $('#input_password_confirmation').val('');
+      });
+    </script>
+
+</body>
+
+</html>
