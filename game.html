@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+
+
+  <div id="name"></div>
+
+  <div>ここがG'sの2Dページです</div>
+
+  <div id="next">次の画面へ</div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+
+
+
+    //URL末尾を抜き取る処理
+    let user_name = location.search.substring(1);
+
+    //それをブラウザに表示する
+    $('#name').text(user_name);
+
+
+
+    $('#next').on('click', function () {
+
+      //この行で、URLと入力した名前を合体させてページ遷移
+      const time_out = function () {
+        window.location.href = 'game2.html?' + user_name;
+      };
+      setTimeout(time_out, 1500);
+
+    });
+
+  </script>
+</body>
+
+</html>
