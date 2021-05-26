@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <button id="start">スタート</button>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyBxp3qTNj79v6kCS7MlSlRhlvw8XCEIckw",
+      authDomain: "kajino-54f62.firebaseapp.com",
+      projectId: "kajino-54f62",
+      storageBucket: "kajino-54f62.appspot.com",
+      messagingSenderId: "860357580856",
+      appId: "1:860357580856:web:706d1947bafc441020aecd"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const number_db = firebase.firestore().collection('number');
+    const user_db = firebase.firestore().collection('user');
+  </script>
+
+
+  <script>
+
+    $('#start').on('click', function () {
+
+
+      user_db.onSnapshot(function (querySnapshot) {
+        const dataArray = [];
+        querySnapshot.docs.forEach(function (doc) {
+          const data = {
+            id: doc.id,
+            data: doc.data(),
+          };
+          dataArray.push(data);
+        });
+        const tagArray = [];
+        dataArray.forEach(function (data) {
+          tagArray.push({
+            id: data.id,
+            name: data.data.name,
+          });
+        })
+      });
+
+
+
+
+
+
+
+      let user_name = location.search.substring(1);
+      const data = {
+        name: user_name
+      };
+      user_db.add(data);
+    });
+
+
+
+
+  </script>
+
+
+</body>
+
+</html>
