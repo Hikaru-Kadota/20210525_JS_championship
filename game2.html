@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div id="start_btn">ゲームに参加する</div>
+  <div id="full_player"></div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyB0cMp-Zr5iobXG5IVsg12YUAWvnPJ5ie8",
+      authDomain: "test-c9e2e.firebaseapp.com",
+      projectId: "test-c9e2e",
+      storageBucket: "test-c9e2e.appspot.com",
+      messagingSenderId: "915346520501",
+      appId: "1:915346520501:web:f93968b673c4e72ffe41fc"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    //①ゲーム画面に何人いるかを管理するデータベースを作っておく
+    const StandBy_user = firebase.firestore().collection('StandBy_user');
+  </script>
+  <script>
+
+
+
+
+
+
+
+    $('#start_btn').on('click', function () {
+
+      //② URL末尾を取得
+      let user_name = location.search.substring(1);
+      let tagArray = [];
+
+      StandBy_user.onSnapshot(function (querySnapshot) {
+        let dataArray = [];
+        querySnapshot.docs.forEach(function (doc) {
+          const data = {
+            id: doc.id,
+            data: doc.data(),
+          };
+          dataArray.push(data);
+        });
+        dataArray.forEach(function (data) {
+          tagArray.push({
+            id: data.id,
+            name: data.data.name,
+          });
+        });
+
+      });
+      // ④ 待機中の人数によって処理を変える
+      if (tagArray[0] == null || tagArray[1] == null) {
+        StandBy_user.add({
+          name: user_name
+        });
+      } else {
+        $('#full_player').text("満室です");
+      }
+    });
+
+
+
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>

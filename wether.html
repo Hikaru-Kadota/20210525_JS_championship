@@ -8,27 +8,64 @@
   <title>Document</title>
 </head>
 
+
+<!-- 
+  〜合体手順〜
+     ①を適切な場所に貼り付けてください。
+     ②htmlで表示したい部分にそれぞれの idをセットして下さい。
+     以上
+     
+     idは以下の通り、天気は "w_1,w_2,w_3・・・"   気温は "t_1,t_2,t_3・・・"  と設定しています。
+
+ -->
+
 <body>
 
-  <div>今日は<span class="dayWeather"></span>、気温は<span class="nowTemp"></span>度</div>
-  <div>明日は<span class="tomorrowWeather"></span>、気温は<span class="tomorrowTemp"></span>度</div>
-  <div>3日後は<span class="dayAfterTomorrowWeather"></span>、気温は<span class="dayAfterTomorrowTemp"></span>度</div>
-  <div>4日後は<span class="threeDaysLaterWeather"></span>、気温は<span class="threeDaysLaterTemp"></span>度</div>
-  <div>5日後は<span class="fourDaysLaterWeather"></span>、気温は<span class="fourDaysLaterTemp"></span>度</div>
-  <div>6日後は<span class="fiveDaysLaterWeather"></span>、気温は<span class="fiveDaysLaterTemp"></span>度</div>
+  <div>
+    <span id="name"></span>さんが今いるこの場所の天気は、
+  </div>
+
+  <div>
+    今日は<span id="w_1"></span>
+    、気温は<span id="t_1"></span>度
+  </div>
+
+
+  <div>
+    明日は<span id="w_2"></span>
+    、気温は<span id="t_2"></span>度
+  </div>
+
+
+  <div>
+    明後日は<span id="w_3"></span>
+    、気温は<span id="t_3"></span>度
+  </div>
+
+  <div>
+    3日後は<span id="w_4"></span>
+    、気温は<span id="t_4"></span>度
+  </div>
+
+  <div>
+    4日後は<span id="w_5"></span>
+    、気温は<span id="t_5"></span>度
+  </div>
+
+  <div>
+    5日後は<span id="w_6"></span>
+    、気温は<span id="t_6"></span>度
+  </div>
 
 
 
+  <!-------------------------------- ①👇👇ここから下をコピーして貼り付け👇👇 ---------------------------------->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script>
-
-
     $(document).ready(function () {
       'use strict'
-
       const APIKEY = "99e9fe4e103779f3e7f4906e498ef3b7";
-
       //翌日9時のデータの場所を割り出す
       const date = new Date();
       const nowHour = date.getHours();
@@ -37,23 +74,17 @@
       const threeDaysLaterData = Math.floor((24 - nowHour + 57) / 3);
       const fourDaysLaterData = Math.floor((24 - nowHour + 81) / 3);
       const fiveDaysLaterData = Math.floor((24 - nowHour + 105) / 3);
-      const sixDaysLaterData = Math.floor((24 - nowHour + 114) / 3);
-
-
+      let user_name = location.search.substring(1);
       //現在位置の取得ができるかどうか
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error);
-
         // 現在位置の取得に成功した場合
         function success(position) {
           const positionData = position.coords;
-
           //緯度経度の取得と表示
           const lat = positionData.latitude;
           const lon = positionData.longitude;
-          $('.location').text('現在の位置（' + Math.floor(lat * 100) / 100 + ',' + Math.floor(lon * 100) / 100 + ')');
-
-
+          $('#location').text('現在の位置（' + Math.floor(lat * 100) / 100 + ',' + Math.floor(lon * 100) / 100 + ')');
           //現在の天気データを呼び出し
           $.ajax({
             url: "http://api.openweathermap.org/data/2.5/weather",
@@ -62,20 +93,18 @@
             //天気データ呼び出し成功時の挙動
             success: function (data) {
               if (data.weather[0].main === "Clear") {
-                $('.dayWeather').text("晴れ");
+                $('#w_1').text("晴れ");
               } else if (data.weather[0].main === "Rain") {
-                $('.dayWeather').text("雨");
+                $('#w_1').text("雨");
               } else if (data.weather[0].main === "Clouds") {
-                $('.dayWeather').text("くもり");
+                $('#w_1').text("くもり");
               } else if (data.weather[0].main === "Snow") {
-                $('.dayWeather').text("雪");
+                $('#w_1').text("雪");
               }
-
               //各データの表示
-              $('.nowTemp').text(Math.floor((data.main.temp - 273.15) * 10) / 10);
+              $('#t_1').text(Math.floor((data.main.temp - 273.15) * 10) / 10);
             }
           });
-
           //明日の天気データを呼び出し
           $.ajax({
             url: "http://api.openweathermap.org/data/2.5/forecast",
@@ -89,108 +118,79 @@
               const targetData3 = data.list[threeDaysLaterData];
               const targetData4 = data.list[fourDaysLaterData];
               const targetData5 = data.list[fiveDaysLaterData];
-              const targetData6 = data.list[sixDaysLaterData];
+              //晴れとか曇りとかを表示させる処理------------------------------------------------------------------------------
+              $('#name').text(user_name);
 
-
-
-
-
-
-              //宮川さんが必要となるエリア👇👇
-
-              ///晴れとか曇りとかを表示させる処理------------------------------------------------------------------------------
               if (targetData1.weather[0].main === "Clear") {
-                $('.tomorrowWeather').text("晴れ");
+                $('#w_2').text("晴れ");
               } else if (targetData1.weather[0].main === "Rain") {
-                $('.tomorrowWeather').text("雨");
+                $('#w_2').text("雨");
               } else if (targetData1.weather[0].main === "Clouds") {
-                $('.tomorrowWeather').text("くもり");
+                $('#w_2').text("くもり");
               } else if (targetData1.weather[0].main === "Snow") {
-                $('.tomorrowWeather').text("雪");
+                $('#w_2').text("雪");
               }
-
               if (targetData2.weather[0].main === "Clear") {
-                $('.dayAfterTomorrowWeather').text("晴れ");
+                $('#w_3').text("晴れ");
               } else if (targetData2.weather[0].main === "Rain") {
-                $('.dayAfterTomorrowWeather').text("雨");
+                $('#w_3').text("雨");
               } else if (targetData2.weather[0].main === "Clouds") {
-                $('.dayAfterTomorrowWeather').text("くもり");
+                $('#w_3').text("くもり");
               } else if (targetData2.weather[0].main === "Snow") {
-                $('.dayAfterTomorrowWeather').text("雪");
+                $('#w_3').text("雪");
               }
-
               if (targetData3.weather[0].main === "Clear") {
-                $('.threeDaysLaterWeather').text("晴れ");
+                $('#w_4').text("晴れ");
               } else if (targetData3.weather[0].main === "Rain") {
-                $('.threeDaysLaterWeather').text("雨");
+                $('#w_4').text("雨");
               } else if (targetData3.weather[0].main === "Clouds") {
-                $('.threeDaysLaterWeather').text("くもり");
+                $('#w_4').text("くもり");
               } else if (targetData3.weather[0].main === "Snow") {
-                $('.threeDaysLaterWeather').text("雪");
+                $('#w_4').text("雪");
               }
-
               if (targetData4.weather[0].main === "Clear") {
-                $('.fourDaysLaterWeather').text("晴れ");
+                $('#w_5').text("晴れ");
               } else if (targetData4.weather[0].main === "Rain") {
-                $('.fourDaysLaterWeather').text("雨");
+                $('#w_5').text("雨");
               } else if (targetData4.weather[0].main === "Clouds") {
-                $('.fourDaysLaterWeather').text("くもり");
+                $('#w_5').text("くもり");
               } else if (targetData4.weather[0].main === "Snow") {
-                $('.fourDaysLaterWeather').text("雪");
+                $('#w_5').text("雪");
               }
-
               if (targetData5.weather[0].main === "Clear") {
-                $('.fiveDaysLaterWeather').text("晴れ");
+                $('#w_6').text("晴れ");
               } else if (targetData5.weather[0].main === "Rain") {
-                $('.fiveDaysLaterWeather').text("雨");
+                $('#w_6').text("雨");
               } else if (targetData5.weather[0].main === "Clouds") {
-                $('.fiveDaysLaterWeather').text("くもり");
+                $('#w_6').text("くもり");
               } else if (targetData5.weather[0].main === "Snow") {
-                $('.fiveDaysLaterWeather').text("雪");
+                $('#w_6').text("雪");
               }
-
-              if (targetData6.weather[0].main === "Clear") {
-                $('.sixDaysLaterWeather').text("晴れ");
-              } else if (targetData6.weather[0].main === "Rain") {
-                $('.sixDaysLaterWeather').text("雨");
-              } else if (targetData6.weather[0].main === "Clouds") {
-                $('.sixDaysLaterWeather').text("くもり");
-              } else if (targetData6.weather[0].main === "Snow") {
-                $('.sixDaysLaterWeather').text("雪");
-              }
-
-
               ///気温を表示する処理------------------------------------------------------------------------------
-              $('.tomorrowTemp').text(Math.floor((targetData1.main.temp - 273.15) * 10) / 10);
-              $('.dayAfterTomorrowTemp').text(Math.floor((targetData2.main.temp - 273.15) * 10) / 10);
-              $('.threeDaysLaterTemp').text(Math.floor((targetData3.main.temp - 273.15) * 10) / 10);
-              $('.fourDaysLaterTemp').text(Math.floor((targetData4.main.temp - 273.15) * 10) / 10);
-              $('.fiveDaysLaterTemp').text(Math.floor((targetData5.main.temp - 273.15) * 10) / 10);
-              $('.sixDaysLaterTemp').text(Math.floor((targetData6.main.temp - 273.15) * 10) / 10);
-
+              $('#t_2').text(Math.floor((targetData1.main.temp - 273.15) * 10) / 10);
+              $('#t_3').text(Math.floor((targetData2.main.temp - 273.15) * 10) / 10);
+              $('#t_4').text(Math.floor((targetData3.main.temp - 273.15) * 10) / 10);
+              $('#t_5').text(Math.floor((targetData4.main.temp - 273.15) * 10) / 10);
+              $('#t_6').text(Math.floor((targetData5.main.temp - 273.15) * 10) / 10);
               //-----------------------------------------------------------------------------------------------
             }
           });
         }
-
-
-
-
-
-
-
-
         //現在位置の取得に失敗した場合
         function error(error) {
-
         }
         //現在位置がそもそも取得できない場合
       } else {
-
       }
-
     }());
   </script>
+
+
+
+  <!-------------------------------- 👆👆 ここまでコピーして貼り付け 👆👆 ---------------------------------->
+
+
+
 
 
 </body>
