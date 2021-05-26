@@ -27,6 +27,14 @@
 
     //URL末尾を抜き取る処理
     let user_name = location.search.substring(1);
+    if (user_name) {
+      // 「&」が含まれている場合は「&」で分割
+      let param = user_name.split('&');
+      console.log(param[1]);
+      // パラメータを格納する用の配列を用意
+      let paramArray = [];
+    }
+
 
     //それをブラウザに表示する
     $('#name').text(user_name);
